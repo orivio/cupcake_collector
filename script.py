@@ -19,7 +19,7 @@ pygame.display.set_caption("Clippy Collector")
 screen = pygame.display.set_mode((WIDTH, HEIGHT), vsync = 1)
 
 player = Player()
-player_box = pygame.Rect(player.x, player.y, 30, 50)
+player_box = pygame.Rect(player.x, player.y, 30, 50) #added w/o test
 grav_velocity = 1
 
 while gameloop:
@@ -44,6 +44,7 @@ while gameloop:
      #   player.y += 50
       #  player.grav_velocity = -1
 
+#added w/o test
     if player_box.y >= HEIGHT:
         player_box.y -= 1 + (player_box.y - HEIGHT)
     if player_box.x >= WIDTH:

@@ -1,7 +1,6 @@
 import pygame
 pygame.init()
 
-
 class Player:
     def __init__(self):
         self.x = 100
@@ -19,7 +18,7 @@ pygame.display.set_caption("Clippy Collector")
 screen = pygame.display.set_mode((WIDTH, HEIGHT), vsync = 1)
 
 player = Player()
-player_box = pygame.Rect(player.x, player.y, 30, 50) #added w/o test
+player_box = pygame.Rect(player.x, player.y, 30, 50)
 grav_velocity = 1
 on_ground = False
 
@@ -40,11 +39,8 @@ while gameloop:
     player_box.x = player.x
     player_box.y = player.y
 
-#added w/o test
     if player_box.bottom >= HEIGHT:
-        #player_box.y -= 1 + (player_box.y - HEIGHT)
         player.dy = 0
-        #grav_velocity = 0
         on_ground = True
     if player_box.right >= WIDTH:
         player_box.x -=1 + (player_box.x - WIDTH)
@@ -57,9 +53,6 @@ while gameloop:
             player.x -= 3
     if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
             player.x += 3
-#    if keys[pygame.K_UP] or keys[pygame.K_w]:
-#        grav_velocity = 1
-#        player.dy = -10
 
     if on_ground:
          grav_velocity = 0

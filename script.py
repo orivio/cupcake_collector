@@ -4,7 +4,7 @@ pygame.init()
 class Player:
     def __init__(self):
         self.x = 300
-        self.y = 300
+        self.y = 200
         self.dy = 1
 
         self.idle = pygame.image.load(r"png sprites\paperclip idle.png").convert_alpha()
@@ -47,7 +47,6 @@ platforms = [
 ]
 
 while gameloop:
-
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             gameloop = False
@@ -60,12 +59,7 @@ while gameloop:
 
     player.dy += grav_velocity
     player_box.y += player.dy
-    #player_box.x = player.x
-    #player_box.y = player.y
 
-    #if player_box.bottom >= HEIGHT:
-    #    player.dy = 0
-    #    on_ground = True
     if player_box.right >= WIDTH:
         player_box.x -=1 + (player_box.x - WIDTH)
     if player_box.top <= 0:
@@ -81,45 +75,34 @@ while gameloop:
 
     screen.fill((84, 156, 105))
     screen.blit(player.anim, (player_box.x, player_box.y))
+    on_ground = False
     for platform in platforms:
          pygame.draw.rect(screen, (0, 0, 0), platform.rect)
          if player_box.colliderect(platform.rect):
                 if player.dy > 0:
-                   if platform.rect.left < player_box.x < platform.rect.right:
-                         player.dy = 0
-                         on_ground = True
-                         player_box.bottom = platform.rect.top
-                   else:
-                        player.dy = 1
-                        on_ground = False
+                     player.dy = 0
+                     on_ground = True
+                     player_box.bottom = platform.rect.top
                    
                 elif player.dy < 0:
                      player_box.top = platform.rect.bottom
-                     player_dy = 1
+                     player.dy = 1
                      on_ground = False
-                #if keys[pygame.K_RIGHT] or keys[pygame.K_d]: #prob doesnt work
-                #     player_box.right = platform.rect.left
-                #     if(player_box.right == platform.rect.right):
-                #         player.x -= 5
-                #elif keys[pygame.K_LEFT] or keys[pygame.K_a]: #prob doesnt work
-                #     player_box.left = platform.rect.right
-                #     if(player_box.right == platform.rect.left):
-                #         player.x += 5
 
     if on_ground:
-             grav_velocity = 0
-             if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
-                  player.anim = player.right
-             elif keys[pygame.K_LEFT] or keys[pygame.K_a]:
-                  player.anim = player.left
-             else:
-                  player.anim = player.idle
+         grav_velocity = 0
+         if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
+              player.anim = player.right
+         elif keys[pygame.K_LEFT] or keys[pygame.K_a]:
+              player.anim = player.left
+         else:
+              player.anim = player.idle
     else:
         grav_velocity = 1
-        if player.dy < 1:
-            player.anim = player.jump
-        else:
-            player.anim = player.fall
+    if player.dy < 0:
+        player.anim = player.jump
+    elif player.dy > 0:
+        player.anim = player.fall
     
     clock.tick(60)
     pygame.display.flip()

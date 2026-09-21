@@ -3,7 +3,7 @@ pygame.init()
 
 class Player:
     def __init__(self):
-        self.x = 100
+        self.x = 300
         self.y = 300
         self.dy = 1
 
@@ -36,14 +36,14 @@ pygame.display.set_caption("Clippy Collector")
 screen = pygame.display.set_mode((WIDTH, HEIGHT), vsync = 1)
 
 player = Player()
-player_box = pygame.Rect(player.x, player.y, 30, 50)
+player_box = pygame.Rect(player.x, player.y, 30, 42)
 grav_velocity = 1
 on_ground = False
 
 platforms = [
      Platform(0, HEIGHT-50, WIDTH, HEIGHT),
-     Platform(50, 300, 100, 30),
-     Platform(400, 280, 100, 30)
+     Platform(50, 230, 100, 30),
+     Platform(400, 210, 100, 30)
 ]
 
 while gameloop:
@@ -59,9 +59,9 @@ while gameloop:
     keys = pygame.key.get_pressed()
 
     player.dy += grav_velocity
-    player.y += player.dy
-    player_box.x = player.x
-    player_box.y = player.y
+    player_box.y += player.dy
+    #player_box.x = player.x
+    #player_box.y = player.y
 
     #if player_box.bottom >= HEIGHT:
     #    player.dy = 0
@@ -74,24 +74,37 @@ while gameloop:
         player_box.x += 1 + (abs(player_box.x))
 
     if keys[pygame.K_LEFT] or keys[pygame.K_a]:
-            player.x -= 3
+            player_box.x -= 3
     if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
-            player.x += 3
+            player_box.x += 3
 
 
     screen.fill((84, 156, 105))
-    screen.blit(player.anim, (player.x, player.y))
+    screen.blit(player.anim, (player_box.x, player_box.y))
     for platform in platforms:
          pygame.draw.rect(screen, (0, 0, 0), platform.rect)
          if player_box.colliderect(platform.rect):
                 if player.dy > 0:
-                   player_box.bottom = platform.rect.top
-                   player.dy = 0
-                   on_ground = True
+                   if platform.rect.left < player_box.x < platform.rect.right:
+                         player.dy = 0
+                         on_ground = True
+                         player_box.bottom = platform.rect.top
+                   else:
+                        player.dy = 1
+                        on_ground = False
+                   
                 elif player.dy < 0:
                      player_box.top = platform.rect.bottom
-                     player_dy = 0
+                     player_dy = 1
                      on_ground = False
+                #if keys[pygame.K_RIGHT] or keys[pygame.K_d]: #prob doesnt work
+                #     player_box.right = platform.rect.left
+                #     if(player_box.right == platform.rect.right):
+                #         player.x -= 5
+                #elif keys[pygame.K_LEFT] or keys[pygame.K_a]: #prob doesnt work
+                #     player_box.left = platform.rect.right
+                #     if(player_box.right == platform.rect.left):
+                #         player.x += 5
 
     if on_ground:
              grav_velocity = 0

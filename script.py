@@ -42,8 +42,8 @@ on_ground = False
 
 platforms = [
      Platform(0, HEIGHT-50, WIDTH, HEIGHT),
-     Platform(50, 230, 100, 30),
-     Platform(400, 210, 100, 30)
+     Platform(50, 250, 100, 30),
+     Platform(400, 230, 100, 30)
 ]
 
 while gameloop:

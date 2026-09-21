@@ -47,13 +47,13 @@ platforms = [
 ]
 
 while gameloop:
+    jump_requested = False
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             gameloop = False
         if event.type == pygame.KEYDOWN:
-             if event.key in (pygame.K_UP, pygame.K_SPACE, pygame.K_w) and on_ground:
-                  player.dy = -15
-                  on_ground = False
+             if event.key in (pygame.K_UP, pygame.K_SPACE, pygame.K_w):
+                  jump_requested = True
 
     keys = pygame.key.get_pressed()
 
@@ -71,6 +71,7 @@ while gameloop:
             player_box.x -= 3
     if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
             player_box.x += 3
+    
 
 
     screen.fill((84, 156, 105))
@@ -88,7 +89,9 @@ while gameloop:
                      player_box.top = platform.rect.bottom
                      player.dy = 1
                      on_ground = False
-
+    if jump_requested and on_ground:
+             player.dy = -15
+             on_ground = False
     if on_ground:
          grav_velocity = 0
          if keys[pygame.K_RIGHT] or keys[pygame.K_d]:

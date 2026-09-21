@@ -24,6 +24,10 @@ class Player:
 
         self.anim = self.idle
 
+class Platform:
+     def __init__ (self, x, y, length, height):
+          self.rect = pygame.Rect(x, y, length, height)
+
 gameloop = True
 WIDTH = 600
 HEIGHT = 400
@@ -35,6 +39,12 @@ player = Player()
 player_box = pygame.Rect(player.x, player.y, 30, 50)
 grav_velocity = 1
 on_ground = False
+
+platforms = [
+     Platform(0, HEIGHT-50, WIDTH, HEIGHT),
+     Platform(50, 300, 100, 30),
+     Platform(400, 280, 100, 30)
+]
 
 while gameloop:
 
@@ -53,9 +63,9 @@ while gameloop:
     player_box.x = player.x
     player_box.y = player.y
 
-    if player_box.bottom >= HEIGHT:
-        player.dy = 0
-        on_ground = True
+    #if player_box.bottom >= HEIGHT:
+    #    player.dy = 0
+    #    on_ground = True
     if player_box.right >= WIDTH:
         player_box.x -=1 + (player_box.x - WIDTH)
     if player_box.top <= 0:
@@ -68,23 +78,35 @@ while gameloop:
     if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
             player.x += 3
 
-    if on_ground:
-         grav_velocity = 0
-         if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
-              player.anim = player.right
-         elif keys[pygame.K_LEFT] or keys[pygame.K_a]:
-              player.anim = player.left
-         else:
-              player.anim = player.idle
-    else:
-         grav_velocity = 1
-         if player.dy < 1:
-              player.anim = player.jump
-         else:
-              player.anim = player.fall
 
     screen.fill((84, 156, 105))
     screen.blit(player.anim, (player.x, player.y))
+    for platform in platforms:
+         pygame.draw.rect(screen, (0, 0, 0), platform.rect)
+         if player_box.colliderect(platform.rect):
+                if player.dy > 0:
+                   player_box.bottom = platform.rect.top
+                   player.dy = 0
+                   on_ground = True
+                elif player.dy < 0:
+                     player_box.top = platform.rect.bottom
+                     player_dy = 0
+                     on_ground = False
+
+    if on_ground:
+             grav_velocity = 0
+             if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
+                  player.anim = player.right
+             elif keys[pygame.K_LEFT] or keys[pygame.K_a]:
+                  player.anim = player.left
+             else:
+                  player.anim = player.idle
+    else:
+        grav_velocity = 1
+        if player.dy < 1:
+            player.anim = player.jump
+        else:
+            player.anim = player.fall
     
     clock.tick(60)
     pygame.display.flip()

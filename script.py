@@ -70,12 +70,12 @@ while gameloop:
 
     if on_ground:
          grav_velocity = 0
-         if not keys[pygame.K_LEFT] or keys[pygame.K_a] or keys[pygame.K_RIGHT] or keys[pygame.K_d]:
-              player.anim = player.idle
-         elif keys[pygame.K_RIGHT] or keys[pygame.K_d]:
+         if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
               player.anim = player.right
          elif keys[pygame.K_LEFT] or keys[pygame.K_a]:
               player.anim = player.left
+         else:
+              player.anim = player.idle
     else:
          grav_velocity = 1
          if player.dy < 1:

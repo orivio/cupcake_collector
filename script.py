@@ -76,7 +76,8 @@ while gameloop:
 
     screen.fill((84, 156, 105))
     screen.blit(player.anim, (player_box.x, player_box.y))
-    on_ground = False
+    if not jump_requested: #testt
+        on_ground = False
     for platform in platforms:
          pygame.draw.rect(screen, (0, 0, 0), platform.rect)
          if player_box.colliderect(platform.rect):

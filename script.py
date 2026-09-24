@@ -1,4 +1,5 @@
 import pygame
+import random
 pygame.init()
 
 class Player:
@@ -28,6 +29,14 @@ class Platform:
      def __init__ (self, x, y, length, height):
           self.rect = pygame.Rect(x, y, length, height)
 
+class sticky_note:
+     def __init__(self, x, y):
+          self.note = pygame.image.load(r"png sprites\sticky_note.png").convert_alpha()
+          self.note = pygame.transform.scale(self.note, (32, 32))
+          self.x = x
+          self.y = y
+          self.hitbox = pygame.Rect(self.x + 16, self. y  + 16, 32, 32)
+
 gameloop = True
 WIDTH = 600
 HEIGHT = 400
@@ -39,11 +48,20 @@ player = Player()
 player_box = pygame.Rect(player.x, player.y, 30, 42)
 grav_velocity = 1
 on_ground = False
+score = 0
 
 platforms = [
      Platform(0, HEIGHT-50, WIDTH, HEIGHT),
      Platform(50, 250, 100, 30),
      Platform(400, 230, 100, 30)
+]
+
+notes = [
+     sticky_note(random.randint(50, 550), random.randint(50, 300)),
+     sticky_note(random.randint(50, 550), random.randint(50, 300)),
+     sticky_note(random.randint(50, 550), random.randint(50, 300)),
+     sticky_note(random.randint(50, 550), random.randint(50, 300)),
+     sticky_note(random.randint(50, 550), random.randint(50, 300)),
 ]
 
 while gameloop:
@@ -71,12 +89,10 @@ while gameloop:
             player_box.x -= 3
     if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
             player_box.x += 3
-    
-
 
     screen.fill((84, 156, 105))
     screen.blit(player.anim, (player_box.x, player_box.y))
-    if not jump_requested: #testt
+    if not jump_requested:
         on_ground = False
     for platform in platforms:
          pygame.draw.rect(screen, (0, 0, 0), platform.rect)
@@ -107,6 +123,12 @@ while gameloop:
         player.anim = player.jump
     elif player.dy > 0:
         player.anim = player.fall
+
+    for sticky in notes:
+         if sticky.hitbox.colliderect(player_box):
+              sticky = sticky_note(random.randint(50, 550), random.randint(50, 350))
+              score += 1
+         screen.blit(sticky.note, (sticky.x, sticky.y))
     
     clock.tick(60)
     pygame.display.flip()

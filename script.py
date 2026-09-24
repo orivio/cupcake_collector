@@ -53,7 +53,8 @@ score = 0
 platforms = [
      Platform(0, HEIGHT-50, WIDTH, HEIGHT),
      Platform(50, 250, 100, 30),
-     Platform(400, 230, 100, 30)
+     Platform(400, 230, 100, 30),
+     Platform(200, 160, 100, 30)
 ]
 
 notes = [
@@ -130,6 +131,9 @@ while gameloop:
               score += 1
               sticky = notes[i]
          screen.blit(sticky.note, (sticky.x, sticky.y))
+         while any (sticky.hitbox.colliderect(plat.rect) for plat in platforms):
+              notes[i] = sticky_note(random.randint(50, 550), random.randint(50, 350))
+              sticky = notes[i]
     
     clock.tick(60)
     pygame.display.flip()

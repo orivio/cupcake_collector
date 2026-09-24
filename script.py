@@ -35,7 +35,7 @@ class sticky_note:
           self.note = pygame.transform.scale(self.note, (32, 32))
           self.x = x
           self.y = y
-          self.hitbox = pygame.Rect(self.x + 16, self. y  + 16, 32, 32)
+          self.hitbox = pygame.Rect(self.x, self. y, 20, 20)
 
 gameloop = True
 WIDTH = 600

@@ -124,10 +124,11 @@ while gameloop:
     elif player.dy > 0:
         player.anim = player.fall
 
-    for sticky in notes:
+    for i, sticky in enumerate(notes):
          if sticky.hitbox.colliderect(player_box):
-              sticky = sticky_note(random.randint(50, 550), random.randint(50, 350))
+              notes[i] = sticky_note(random.randint(50, 550), random.randint(50, 350))
               score += 1
+              sticky = notes[i]
          screen.blit(sticky.note, (sticky.x, sticky.y))
     
     clock.tick(60)

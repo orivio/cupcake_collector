@@ -48,7 +48,7 @@ async def main():
      screen = pygame.display.set_mode((WIDTH, HEIGHT), vsync = 1)
 
      player = Player()
-     player_box = pygame.Rect(player.x, player.y, 30, 38)
+     player_box = pygame.Rect(player.x, player.y, 30, 45)
      grav_velocity = 1
      on_ground = False
      score = 0

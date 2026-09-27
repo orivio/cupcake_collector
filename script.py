@@ -56,8 +56,7 @@ platforms = [
      Platform(50, 250, 100, 30),
      Platform(400, 260, 100, 30),
      Platform(150, 160, 100, 30),
-     Platform(350, 130, 100, 30),
-     Platform(260, 220, 100, 30)
+     Platform(350, 130, 100, 30)
 ]
 
 notes = [
@@ -96,7 +95,7 @@ while gameloop:
 
     screen.fill((84, 156, 105))
     screen.blit(player.anim, (player_box.x - 5, player_box.y))
-    pygame.draw.rect(screen, (255, 255, 255), player_box)
+    #pygame.draw.rect(screen, (255, 255, 255), player_box)
     if not jump_requested:
         on_ground = False
     for platform in platforms:

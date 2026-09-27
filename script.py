@@ -8,19 +8,19 @@ class Player:
         self.y = 200
         self.dy = 1
 
-        self.idle = pygame.image.load(r"png sprites\paperclip idle.png").convert_alpha()
+        self.idle = pygame.image.load(r"png sprites/paperclip idle.png").convert_alpha()
         self.idle = pygame.transform.scale(self.idle, (50, 50))
 
-        self.fall = pygame.image.load(r"png sprites\paperclip fall.png").convert_alpha()
+        self.fall = pygame.image.load(r"png sprites/paperclip fall.png").convert_alpha()
         self.fall = pygame.transform.scale(self.fall, (50, 50))
 
-        self.jump = pygame.image.load(r"png sprites\paperclip jump.png").convert_alpha()
+        self.jump = pygame.image.load(r"png sprites/paperclip jump.png").convert_alpha()
         self.jump = pygame.transform.scale(self.jump, (50, 50))
 
-        self.left = pygame.image.load(r"png sprites\paperclip left.png").convert_alpha()
+        self.left = pygame.image.load(r"png sprites/paperclip left.png").convert_alpha()
         self.left = pygame.transform.scale(self.left, (50, 50))
 
-        self.right = pygame.image.load(r"png sprites\paperclip right.png").convert_alpha()
+        self.right = pygame.image.load(r"png sprites/paperclip right.png").convert_alpha()
         self.right = pygame.transform.scale(self.right, (50, 50))
 
         self.anim = self.idle
@@ -31,7 +31,7 @@ class Platform:
 
 class sticky_note:
      def __init__(self, x, y):
-          self.note = pygame.image.load(r"png sprites\sticky_note.png").convert_alpha()
+          self.note = pygame.image.load(r"png sprites/sticky_note.png").convert_alpha()
           self.note = pygame.transform.scale(self.note, (32, 32))
           self.x = x
           self.y = y

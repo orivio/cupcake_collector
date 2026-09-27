@@ -45,7 +45,7 @@ pygame.display.set_caption("Clippy Collector")
 screen = pygame.display.set_mode((WIDTH, HEIGHT), vsync = 1)
 
 player = Player()
-player_box = pygame.Rect(player.x, player.y, 30, 42)
+player_box = pygame.Rect(player.x, player.y, 30, 38)
 grav_velocity = 1
 on_ground = False
 score = 0
@@ -54,8 +54,10 @@ font = pygame.font.Font(None, 32)
 platforms = [
      Platform(0, HEIGHT-50, WIDTH, HEIGHT),
      Platform(50, 250, 100, 30),
-     Platform(400, 230, 100, 30),
-     Platform(200, 160, 100, 30)
+     Platform(400, 260, 100, 30),
+     Platform(150, 160, 100, 30),
+     Platform(350, 130, 100, 30),
+     Platform(260, 220, 100, 30)
 ]
 
 notes = [
@@ -93,7 +95,8 @@ while gameloop:
             player_box.x += 3
 
     screen.fill((84, 156, 105))
-    screen.blit(player.anim, (player_box.x, player_box.y))
+    screen.blit(player.anim, (player_box.x - 5, player_box.y))
+    pygame.draw.rect(screen, (255, 255, 255), player_box)
     if not jump_requested:
         on_ground = False
     for platform in platforms:

@@ -49,6 +49,7 @@ player_box = pygame.Rect(player.x, player.y, 30, 42)
 grav_velocity = 1
 on_ground = False
 score = 0
+font = pygame.font.Font(None, 32)
 
 platforms = [
      Platform(0, HEIGHT-50, WIDTH, HEIGHT),
@@ -134,6 +135,8 @@ while gameloop:
          while any (sticky.hitbox.colliderect(plat.rect) for plat in platforms):
               notes[i] = sticky_note(random.randint(50, 550), random.randint(50, 350))
               sticky = notes[i]
+    score_disp = font.render(f"Sticky Notes Collected: {score}", True, (255, 255, 255))
+    screen.blit(score_disp, (10, 10))
     
     clock.tick(60)
     pygame.display.flip()
